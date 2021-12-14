@@ -1,0 +1,27 @@
+package com.book.example.demo;
+
+import static org.mockito.Mockito.when;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.book.example.demo.repository.BookStoreRepository;
+import com.book.example.demo.service.BookStoreService;
+import com.mongodb.connection.Stream;
+
+@Run
+@SpringBootTest
+public class BookStoreMockitoTest
+{
+	@Autowired
+	private BookStoreService bookStoreService;
+	
+	@MockBean
+	private BookStoreRepository bookStoreRepository;
+	
+	public void getBooksTest()
+	{
+		when(bookStoreRepository.findAll()).thenReturn(Str)
+	}
+}

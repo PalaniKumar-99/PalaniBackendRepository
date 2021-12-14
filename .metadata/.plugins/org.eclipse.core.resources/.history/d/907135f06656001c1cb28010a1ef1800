@@ -1,0 +1,49 @@
+package com.book.example.demo;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import com.book.example.demo.model.BookStore;
+import com.book.example.demo.repository.BookStoreRepository;
+import com.book.example.demo.service.BookStoreService;
+
+@SpringBootTest
+public class BookStoreMockitoTest
+{
+	@Autowired
+	private BookStoreService bookStoreService;
+	
+	@MockBean
+	private BookStoreRepository bookStoreRepository;
+	
+	@Test
+	public void getBooksTest()
+	{
+		when(bookStoreRepository.findAll()).thenReturn(Stream
+				.of(new BookStore(1, "Java Book", 1100.0),new BookStore(2, "Javacript", 400.0)).collect(Collectors.toList()));
+		assertEquals(2, bookStoreService.getBooks().size());
+	}
+	/*
+	 * public void getBooksByIdTest() { int id=2;
+	 * when(bookStoreRepository.findById(id)).thenReturn(Stream .of(new BookStore(2,
+	 * "javascript", 300.00)).collect(Collectors.toList()));
+	 * 
+	 * }
+	 */
+	
+	@Test
+	public void addBooksTest()
+	{
+		BookStore bookstore=new  BookStore(1, "Java Book", 450.0);
+		when(bookStoreRepository.save(bookstore)).thenReturn(bookstore);
+		assertEquals(bookstore, bookStoreService.addBooks(bookstore));
+	}
+}
